@@ -23,10 +23,10 @@ namespace DataLogger
 				MessageParser messageParser = new MessageParser(message); 
 				int port = messageParser.GetInt("port");
 				string id = messageParser.GetString("id");
-				m_DataCollector.AddArtifact ("33", comm.RemoteEndPoint, port);
+				m_DataCollector.AddArtifact (id, comm.RemoteEndPoint, port);
 
 				comm.Write("status=registered");
-			}catch(Exception e){
+			}catch(Exception){
 				comm.Write ("status=registration_failure");
 			}
 		}

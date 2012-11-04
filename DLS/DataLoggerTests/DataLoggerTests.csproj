@@ -51,7 +51,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MessageParserTests.cs" />
     <Compile Include="RegistrationServerTests.cs" />
   </ItemGroup>
@@ -68,5 +67,8 @@
       <Project>{60EE5F14-945E-47F7-BBA1-3A07F15D7C4E}</Project>
       <Name>DataLogger</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 </Project>
