@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLogger", "DataLogger.csproj", "{60EE5F14-945E-47F7-BBA1-3A07F15D7C4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLoggerTests", "..\DataLoggerTests\DataLoggerTests.csproj", "{AE8924E2-CB63-4B20-A213-6BC810AB0810}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{60EE5F14-945E-47F7-BBA1-3A07F15D7C4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60EE5F14-945E-47F7-BBA1-3A07F15D7C4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60EE5F14-945E-47F7-BBA1-3A07F15D7C4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60EE5F14-945E-47F7-BBA1-3A07F15D7C4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE8924E2-CB63-4B20-A213-6BC810AB0810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE8924E2-CB63-4B20-A213-6BC810AB0810}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE8924E2-CB63-4B20-A213-6BC810AB0810}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE8924E2-CB63-4B20-A213-6BC810AB0810}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = DataLogger.csproj
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
