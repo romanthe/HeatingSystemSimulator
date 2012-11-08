@@ -24,3 +24,18 @@ func parseMessage(m Message, message string) {
 	}
 	return
 }
+
+// Get gets the first value associated with the given key.
+// If there are no values associated with the key, Get returns
+// the empty string. To access multiple values, use the map
+// directly.
+func (v Message) Get(key string) string {
+	if v == nil {
+		return ""
+	}
+	vs, ok := v[key]
+	if !ok || len(vs) == 0 {
+		return ""
+	}
+	return vs[0]
+}

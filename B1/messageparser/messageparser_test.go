@@ -75,10 +75,77 @@ func TestParseMessage(t *testing.T) {
 	}
 }
 
-var messageparsbencgmark = "id=name action=requestAllResponse fcob=75.40 th=45.55 tr=17.03 tpco=30.15"
+var messageparsebenchmark = "id=name action=requestAllResponse fcob=75.40 th=45.55 tr=17.03 tpco=30.15"
 
 func BenchmarkParseMessage(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		ParseMessage(messageparsbencgmark)
+		ParseMessage(messageparsebenchmark)
+	}
+}
+
+type MessageGetTest struct {
+	in  Message
+	out string
+	key string
+}
+
+var messagegettests = []MessageGetTest{
+	// not empty map
+	{
+		in: Message{
+			"action": []string{"register"},
+			"id":     []string{"name"},
+			"port":   []string{"1234"},
+		},
+		out: "1234",
+		key: "port",
+	},
+	// single element map
+	{
+		in: Message{
+			"id": []string{"name"},
+		},
+		out: "name",
+		key: "id",
+	},
+	// empty map
+	{
+		in:  Message{},
+		out: "",
+		key: "id",
+	},
+	// not existing key
+	{
+		in: Message{
+			"action": []string{"register"},
+			"id":     []string{"name"},
+			"port":   []string{"1234"},
+		},
+		out: "",
+		key: "status",
+	},
+}
+
+func TestGet(t *testing.T) {
+	for i, test := range messagegettests {
+		test.in.Get("id")
+		x := test.in.Get(test.key)
+		if x != test.out {
+			t.Errorf("test %d: Get(\"%w\") = %w, want %w", i, test.key, x, test.out)
+		}
+	}
+}
+
+var messagegetbenchmark = Message{
+	"action": []string{"register"},
+	"id":     []string{"name"},
+	"port":   []string{"1234"},
+}
+
+var messagegetbenchmarkkey = "id"
+
+func BenchmarkGet(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		messagegetbenchmark.Get(messagegetbenchmarkkey)
 	}
 }
