@@ -11,8 +11,7 @@ import (
 // TODO Add port and rest parameters
 func Server() {
 
-	service := ":1200"
-	listener, err := net.Listen("tcp", service)
+	listener, err := net.Listen("tcp", ":" + UsePort)
 	checkError(err)
 
 	for {

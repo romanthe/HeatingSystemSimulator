@@ -16,20 +16,20 @@ func requestController(s string) string {
 	}
 	switch action[0] {
 	case "getDataRequest":
-		return getDataRequest(request)
+		return getDataResponse(request)
 	case "setControllerRequest":
-		return setControllerRequest(request)
+		return setControllerResponse(request)
 	default:
 		//unknown request
 	}
-	return "id name action=Response error=unknownRequest"
+	return "id=" + MyID + " action=Response error=unknownRequest"
 }
 
-func getDataRequest(m mp.Message) string {
+func getDataResponse(m mp.Message) string {
 	//unpack needed Value and call function
 	// func foobar()
 	resp := mp.Message{
-		"id":     []string{"name"},
+		"id":     []string{MyID},
 		"action": []string{"getDataResponse"},
 		"th":     []string{"40.00"},
 		"tr":     []string{"20.07"},
@@ -41,11 +41,11 @@ func getDataRequest(m mp.Message) string {
 	return resp.Encode()
 }
 
-func setControllerRequest(m mp.Message) string {
+func setControllerResponse(m mp.Message) string {
 	//unpack needed Value and call function
 	// func foobar()
 	resp := mp.Message{
-		"id":     []string{"name"},
+		"id":     []string{MyID},
 		"action": []string{"setControllerResponse"},
 		"status": []string{"0"},
 	}
