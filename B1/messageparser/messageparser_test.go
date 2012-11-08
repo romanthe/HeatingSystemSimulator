@@ -75,11 +75,9 @@ func TestParseMessage(t *testing.T) {
 	}
 }
 
-var messageparsebenchmark = "id=name action=requestAllResponse fcob=75.40 th=45.55 tr=17.03 tpco=30.15"
-
 func BenchmarkParseMessage(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		ParseMessage(messageparsebenchmark)
+		ParseMessage("id=name action=requestAllResponse fcob=75.40 th=45.55 tr=17.03 tpco=30.15")
 	}
 }
 
@@ -135,17 +133,16 @@ func TestGet(t *testing.T) {
 	}
 }
 
-var messagegetbenchmark = Message{
-	"action": []string{"register"},
-	"id":     []string{"name"},
-	"port":   []string{"1234"},
-}
-
-var messagegetbenchmarkkey = "id"
-
 func BenchmarkGet(b *testing.B) {
+	b.StopTimer()
+	m := Message{
+		"action": []string{"register"},
+		"id":     []string{"name"},
+		"port":   []string{"1234"},
+	}
+	b.StartTimer()
 	for i := 0; i < b.N; i++ {
-		messagegetbenchmark.Get(messagegetbenchmarkkey)
+		m.Get("id")
 	}
 }
 
@@ -172,11 +169,11 @@ func TestSet(t *testing.T) {
 	for i, test := range messagesettests {
 		test.in.Set(test.key, test.value)
 		x := test.in[test.key]
-		for j := range x{ 
-		if x[j] != []string{test.value}[j] {
-			t.Errorf("test %d: Set(\"%w\", \"%w\") = %w, want %w", i,
-				test.key, test.value, x, test.value)
-		}
+		for j := range x {
+			if x[j] != []string{test.value}[j] {
+				t.Errorf("test %d: Set(\"%w\", \"%w\") = %w, want %w", i,
+					test.key, test.value, x, test.value)
+			}
 		}
 	}
 }
@@ -187,12 +184,15 @@ var messagesetbenchmark = Message{
 	"port":   []string{"1234"},
 }
 
-var messagesetbenchmarkkey = "id"
-var messagesetbenchmarkvalue = "id"
-
 func BenchmarkSet(b *testing.B) {
+	b.StopTimer()
+	m := Message{
+		"action": []string{"register"},
+		"id":     []string{"name"},
+		"port":   []string{"1234"},
+	}
+	b.StartTimer()
 	for i := 0; i < b.N; i++ {
-		messagegetbenchmark.Set(messagesetbenchmarkkey,
-			messagesetbenchmarkvalue)
+		m.Set("id", "4321")
 	}
 }
