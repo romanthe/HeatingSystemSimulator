@@ -169,7 +169,7 @@ func BenchmarkDel(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
 		m := Message{
-			"id":     []string{"name"},
+			"id": []string{"name"},
 		}
 		b.StartTimer()
 		m.Del("id")
@@ -186,7 +186,7 @@ func TestEncode(t *testing.T) {
 			"action": []string{"register"},
 			"id":     []string{"name"},
 			"port":   []string{"1234"},
-		}, "action=register id=name port=1234", 
+		}, "action=register id=name port=1234",
 		},
 	}
 	for i, test := range testCases {

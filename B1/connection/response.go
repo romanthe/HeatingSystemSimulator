@@ -2,7 +2,7 @@ package connection
 
 import (
 	"fmt"
-	mp "sandbox/messageparser"
+	mp "github.com/nkdm/HeatingSystemSimulator/B1/messageparser"
 )
 
 //TODO for now controller calls request functions staticly,
