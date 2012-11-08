@@ -128,7 +128,6 @@ var messagegettests = []MessageGetTest{
 
 func TestGet(t *testing.T) {
 	for i, test := range messagegettests {
-		test.in.Get("id")
 		x := test.in.Get(test.key)
 		if x != test.out {
 			t.Errorf("test %d: Get(\"%w\") = %w, want %w", i, test.key, x, test.out)
@@ -147,5 +146,53 @@ var messagegetbenchmarkkey = "id"
 func BenchmarkGet(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		messagegetbenchmark.Get(messagegetbenchmarkkey)
+	}
+}
+
+type MessageSetTest struct {
+	in    Message
+	key   string
+	value string
+}
+
+var messagesettests = []MessageSetTest{
+	// set port
+	{
+		in: Message{
+			"action": []string{"register"},
+			"id":     []string{"name"},
+			"port":   []string{"1234"},
+		},
+		key:   "port",
+		value: "4321",
+	},
+}
+
+func TestSet(t *testing.T) {
+	for i, test := range messagesettests {
+		test.in.Set(test.key, test.value)
+		x := test.in[test.key]
+		for j := range x{ 
+		if x[j] != []string{test.value}[j] {
+			t.Errorf("test %d: Set(\"%w\", \"%w\") = %w, want %w", i,
+				test.key, test.value, x, test.value)
+		}
+		}
+	}
+}
+
+var messagesetbenchmark = Message{
+	"action": []string{"register"},
+	"id":     []string{"name"},
+	"port":   []string{"1234"},
+}
+
+var messagesetbenchmarkkey = "id"
+var messagesetbenchmarkvalue = "id"
+
+func BenchmarkSet(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		messagegetbenchmark.Set(messagesetbenchmarkkey,
+			messagesetbenchmarkvalue)
 	}
 }

@@ -39,3 +39,9 @@ func (v Message) Get(key string) string {
 	}
 	return vs[0]
 }
+
+// Set sets the key to value. It replaces any existing
+// values.
+func (v Message) Set(key, value string) {
+	v[key] = []string{value}
+}
