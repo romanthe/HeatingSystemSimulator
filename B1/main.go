@@ -2,7 +2,7 @@
 package main
 
 import (
-	conn "sandbox/connection"
+	conn "github.com/nkdm/HeatingSystemSimulator/B1/connection"
 )
 
 func main() {
