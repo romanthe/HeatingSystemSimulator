@@ -45,3 +45,8 @@ func (v Message) Get(key string) string {
 func (v Message) Set(key, value string) {
 	v[key] = []string{value}
 }
+
+// Del deletes the values associated with key.
+func (v Message) Del(key string) {
+	delete(v, key)
+}
