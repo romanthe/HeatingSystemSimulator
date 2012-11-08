@@ -50,3 +50,19 @@ func (v Message) Set(key, value string) {
 func (v Message) Del(key string) {
 	delete(v, key)
 }
+
+// Encode encodes the values into Message string form.
+// e.g. "foo=bar bar=baz"
+func (v Message) Encode() string {
+	if v == nil {
+		return ""
+	}
+	parts := make([]string, 0, len(v)) // will be large enough for most uses
+	for k, vs := range v {
+		prefix := k + "="
+		for _, v := range vs {
+			parts = append(parts, prefix+v)
+		}
+	}
+	return strings.Join(parts, " ")
+}

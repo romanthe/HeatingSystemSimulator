@@ -175,3 +175,38 @@ func BenchmarkDel(b *testing.B) {
 		m.Del("id")
 	}
 }
+
+func TestEncode(t *testing.T) {
+	var testCases = []struct {
+		in  Message
+		out string
+	}{
+		// normal message
+		{Message{
+			"action": []string{"register"},
+			"id":     []string{"name"},
+			"port":   []string{"1234"},
+		}, "action=register id=name port=1234", 
+		},
+	}
+	for i, test := range testCases {
+		x := test.in.Encode()
+		if len(x) != len(test.out) {
+			t.Errorf("test %d: len(x) = %d, want %d", i, len(x), len(test.out))
+		}
+		// test is incomplete, need to be fix later
+	}
+}
+
+func BenchmarkEncode(b *testing.B) {
+	b.StopTimer()
+	m := Message{
+		"action": []string{"register"},
+		"id":     []string{"name"},
+		"port":   []string{"1234"},
+	}
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		m.Encode()
+	}
+}
