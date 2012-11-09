@@ -1,4 +1,6 @@
 *.suo
+*.pdb
+*.exe
 */bin/*
 *.userprefs
 *.csproj*.xml

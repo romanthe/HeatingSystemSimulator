@@ -7,27 +7,27 @@ namespace DataLogger
 {
 	public class RegistrationServer
 	{
-		DataCollector m_DataCollector{get; set;}
+		IDataCollector m_DataCollector{get; set;}
 		IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1236);
 
-		public RegistrationServer (DataCollector dataCollector)
+		public RegistrationServer (IDataCollector dataCollector)
 		{
 			m_DataCollector = dataCollector;
 		}
 
-		public void Process (ICommunication comm)
+		public void Process (IConnection conn)
 		{
-			string message = comm.Read();
+			string message = conn.Read();
 
 			try{
 				MessageParser messageParser = new MessageParser(message); 
 				int port = messageParser.GetInt("port");
 				string id = messageParser.GetString("id");
-				m_DataCollector.AddArtifact (id, comm.RemoteEndPoint, port);
+				m_DataCollector.AddArtifact (id, conn.RemoteIp, port);
 
-				comm.Write("status=registered");
+				conn.Write("status=registered");
 			}catch(Exception){
-				comm.Write ("status=registration_failure");
+				conn.Write ("status=registration_failure");
 			}
 		}
 
@@ -36,21 +36,14 @@ namespace DataLogger
 			TcpListener myList = new TcpListener (ipep);
 			myList.Start ();
 			while (true) {
-				Process (new SocketComm(myList.AcceptSocket()));
+				Process (new SocketConn(myList.AcceptSocket()));
 			}
 		}
 	}
 
-	public interface ICommunication
-	{
-		void Write(string message);
-		string Read();
-		IPAddress RemoteEndPoint{get;}
-	}
-
-	public class SocketComm: ICommunication{
+	public class SocketConn: IConnection{
 		public Socket m_Socket;
-		public SocketComm(Socket socket){
+		public SocketConn(Socket socket){
 			m_Socket = socket;
 		}
 
@@ -61,11 +54,10 @@ namespace DataLogger
 		}
 
 		public void Write(string message){
-		//	Console.WriteLine(message);
 			m_Socket.Send(Encoding.ASCII.GetBytes(message));
 		}
 
-		public IPAddress RemoteEndPoint{
+		public IPAddress RemoteIp{
 			get{
 				return (m_Socket.RemoteEndPoint as IPEndPoint).Address;
 			}
