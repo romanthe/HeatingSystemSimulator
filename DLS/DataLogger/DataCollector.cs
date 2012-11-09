@@ -47,8 +47,8 @@ namespace DataLogger
 
 		public void DataCollectorMain(){
 			while(running){
-				Thread.Sleep(500);
-				GetDataFromAllArtifacts();
+				Thread.Sleep(1000);
+				GetDataFromAllArtifacts();   
 			};
 		}
 
@@ -62,11 +62,11 @@ namespace DataLogger
 			Socket server = new Socket (AddressFamily.InterNetwork,
 		                     SocketType.Stream, ProtocolType.Tcp);
 			server.Connect (artifact);
-			server.Send (Encoding.ASCII.GetBytes ("request=all"));
+			server.Send (Encoding.ASCII.GetBytes ("action=request request=all"));
 			byte[] data = new byte[1024];
-			server.Receive (data);
-			string message = Encoding.ASCII.GetString (data);
-			return message;
+            int length = server.Receive(data);
+            server.Close();
+			return Encoding.ASCII.GetString (data,0,length);
 		}
 
 		void CleanArtifacts ()
