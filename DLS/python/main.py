@@ -1,11 +1,11 @@
 import socket
 
 HOST = '127.0.0.1'      # Symbolic name meaning the local host
-PORT = 1235            # Arbitrary non-privileged port
+PORT = 1237            # Arbitrary non-privileged port
 
 socketRegister = socket.socket()
 socketRegister.connect((HOST,1236))
-socketRegister.send("action=register id=pythonStub port=1235")
+socketRegister.send("action=register id=pythonStub port=" + PORT.__repr__())
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

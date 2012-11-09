@@ -17,7 +17,10 @@ namespace DataLogger
 
 		public string GetString(string field){
 			string[] pairs = Message.Split(' ');
-			var ports = from pair in pairs where pair.Contains(field + "=") select pair.Remove(0,field.Length + 1);
+			var ports = from pair in pairs 
+				where pair.Contains(field + "=") 
+				select pair.Remove(0,field.Length + 1);
+
 			string answer = ports.FirstOrDefault();
 			if(answer != null){
 				return answer;

@@ -7,10 +7,15 @@ using System.Threading;
 
 namespace DataLogger
 {
-	public class DataCollector
+	public interface IDataCollector{
+		void AddArtifact(string id, IPAddress ip, int port);
+	}
+
+	public class DataCollector : IDataCollector
 	{
-		List<IPEndPoint> artifacts = new List<IPEndPoint> ();
-		List<IPEndPoint> artifactsToDel = new List<IPEndPoint> ();
+		Dictionary<string, IPEndPoint> artifacts = new Dictionary<string, IPEndPoint>();
+		List<string> artifactsToDel = new List<string> ();
+
 		bool running = true;
 
 		public DataCollector ()
@@ -18,25 +23,18 @@ namespace DataLogger
 
 		}
 
-		public void AddArtifact (IPEndPoint ipep)
-		{
-			lock (artifacts) {
-				artifacts.Add (ipep);
-			}
-		}
-
 		public void AddArtifact(string id, IPAddress ip, int port){
 			lock (artifacts) {
-				artifacts.Add (new IPEndPoint(ip, port));
+				artifacts[id] = new IPEndPoint(ip, port);
 			}
 		}
 
 		public void GetDataFromAllArtifacts ()
 		{
 			lock (artifacts) {
-				foreach (var artifact in artifacts) {
+				foreach (var artifact in artifacts.Keys) {
 					try {
-						string data = GetData (artifact);
+						string data = GetData (artifacts[artifact]);
 						Console.WriteLine (data);
 
 					} catch (System.Net.Sockets.SocketException) {
@@ -59,7 +57,7 @@ namespace DataLogger
 			t.Start();
 		}
 
-		static string GetData (IPEndPoint artifact)
+		string GetData (IPEndPoint artifact)
 		{
 			Socket server = new Socket (AddressFamily.InterNetwork,
 		                     SocketType.Stream, ProtocolType.Tcp);
@@ -74,9 +72,9 @@ namespace DataLogger
 		void CleanArtifacts ()
 		{
 			lock(artifacts){
-			foreach (var artifact in artifactsToDel) {
-				artifacts.Remove (artifact);
-			}
+				foreach (var artifact in artifactsToDel) {
+					artifacts.Remove (artifact);
+				}
 			}
 		}
 	}
