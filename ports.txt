@@ -1,2 +1,3 @@
+123  NTP: NTP time sync server (UDP)
 1236 DLS: Main application
 1237 DLS: Python testing script
