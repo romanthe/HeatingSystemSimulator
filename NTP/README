@@ -1,0 +1,9 @@
+A very basic NTP communication library for C++. It sends UDP packet to port 123 and IP address provided to the function, returning number of seconds passed since 1 Jan 1970.
+
+USAGE:
+    #include "../NTP/ntp_connector.h" //check for relative path!
+    
+    unsigned int thetimestamp = get_current_timestamp("217.153.128.243"); //some online NTP server
+    //unsigned int thetimestamp = get_current_timestamp("127.127.127.127"); //offline test loopback address, always returns time sometime before 21:00 10 Nov 2012.
+    
+That's all folks!
